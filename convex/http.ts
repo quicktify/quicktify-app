@@ -51,6 +51,12 @@ http.route({
             email: result.data.email_addresses[0]?.email_address,
             userId: result.data.id,
           });
+          break;
+        case 'user.deleted':
+          await ctx.runMutation(internal.users.deleteUser, {
+            userId: result.data.id,
+          });
+          break;
       }
 
       return new Response(null, {

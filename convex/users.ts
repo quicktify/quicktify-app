@@ -42,6 +42,39 @@ export const createUser = internalMutation({
   },
 });
 
+export const deleteUser = internalMutation({
+  args: { userId: v.string() },
+  handler: async (ctx, args) => {
+    // Delete user record
+    const user = await getFullUser(ctx, args.userId);
+    if (user) {
+      await ctx.db.delete(user._id);
+    }
+
+    // Delete all analysis records for this user
+    const analysisRecords = await ctx.db
+      .query('analysis')
+      .withIndex('by_userId', (q) => q.eq('userId', args.userId))
+      .collect();
+
+    for (const record of analysisRecords) {
+      await ctx.db.delete(record._id);
+    }
+
+    // Delete all rating estimation records for this user
+    const ratingEstimationRecords = await ctx.db
+      .query('ratingEstimations')
+      .withIndex('by_userId', (q) => q.eq('userId', args.userId))
+      .collect();
+
+    for (const record of ratingEstimationRecords) {
+      await ctx.db.delete(record._id);
+    }
+
+    console.log(`Deleted user ${args.userId} and all associated data`);
+  },
+});
+
 // export const updateSubscription = internalMutation({
 //   args: { subscriptionId: v.string(), userId: v.string(), endsOn: v.number() },
 //   handler: async (ctx, args) => {
