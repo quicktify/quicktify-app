@@ -273,43 +273,45 @@ const RatingEstimation = () => {
                 <DialogTitle className="text-lg sm:text-2xl mb-2">
                   Tentang Form Estimasi Rating Aplikasi
                 </DialogTitle>
-                <DialogDescription className="text-sm sm:text-base">
-                  <ul className="list-disc pl-5 space-y-2 text-left break-words">
-                    <li>
-                      <b>Category</b>: Kategori aplikasi yang terdaftar di Play
-                      Store.
-                    </li>
-                    <li>
-                      <b>Rating Count</b>: Total jumlah rating yang diterima
-                      aplikasi Anda.
-                    </li>
-                    <li>
-                      <b>Installs</b>: Perkiraan jumlah kali aplikasi Anda
-                      diinstal.
-                    </li>
-                    <li>
-                      <b>Size (MB)</b>: Ukuran aplikasi Anda dalam megabyte.
-                    </li>
-                    <li>
-                      <b>Content Rating</b>: Rating usia untuk aplikasi Anda.
-                    </li>
-                    <li>
-                      <b>App Type</b>: Apakah aplikasi Anda Gratis atau
-                      Berbayar.
-                    </li>
-                    <li>
-                      <b>Ad Supported</b>: Apakah aplikasi Anda menampilkan
-                      iklan.
-                    </li>
-                    <li>
-                      <b>In App Purchases</b>: Apakah aplikasi Anda menawarkan
-                      pembelian dalam aplikasi.
-                    </li>
-                    <li>
-                      <b>Editors Choice</b>: Apakah aplikasi Anda telah menerima
-                      badge "Editor's Choice" di Play Store.
-                    </li>
-                  </ul>
+                <DialogDescription asChild>
+                  <div className="text-sm sm:text-base">
+                    <ul className="list-disc pl-5 space-y-2 text-left break-words">
+                      <li>
+                        <b>Category</b>: Kategori aplikasi yang terdaftar di
+                        Play Store.
+                      </li>
+                      <li>
+                        <b>Rating Count</b>: Total jumlah rating yang diterima
+                        aplikasi Anda.
+                      </li>
+                      <li>
+                        <b>Installs</b>: Perkiraan jumlah kali aplikasi Anda
+                        diinstal.
+                      </li>
+                      <li>
+                        <b>Size (MB)</b>: Ukuran aplikasi Anda dalam megabyte.
+                      </li>
+                      <li>
+                        <b>Content Rating</b>: Rating usia untuk aplikasi Anda.
+                      </li>
+                      <li>
+                        <b>App Type</b>: Apakah aplikasi Anda Gratis atau
+                        Berbayar.
+                      </li>
+                      <li>
+                        <b>Ad Supported</b>: Apakah aplikasi Anda menampilkan
+                        iklan.
+                      </li>
+                      <li>
+                        <b>In App Purchases</b>: Apakah aplikasi Anda menawarkan
+                        pembelian dalam aplikasi.
+                      </li>
+                      <li>
+                        <b>Editors Choice</b>: Apakah aplikasi Anda telah
+                        menerima badge "Editor's Choice" di Play Store.
+                      </li>
+                    </ul>
+                  </div>
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
@@ -793,46 +795,48 @@ const RatingEstimation = () => {
                     <DialogTitle className="text-lg sm:text-2xl mb-2">
                       Tentang Hasil Estimasi Rating Aplikasi
                     </DialogTitle>
-                    <DialogDescription className="text-sm sm:text-base">
-                      <ul className="list-disc pl-5 space-y-2 text-left break-words">
-                        <li>
-                          <b>Predicted Rating</b>: Rating aplikasi yang
-                          diestimasikan berdasarkan data yang Anda masukkan.
-                        </li>
-                        <li>
-                          <b>Confidence Interval</b>: Rentang kemungkinan nilai
-                          rating sebenarnya, menunjukkan tingkat kepastian dari
-                          prediksi.
-                        </li>
-                        <li>
-                          <b>Input Summary</b>: Ringkasan data yang Anda berikan
-                          ke sistem.
-                        </li>
-                        <li>
-                          <b>Feature Importance</b>: Fitur-fitur yang paling
-                          berpengaruh untuk prediksi rating, diurutkan
-                          berdasarkan tingkat kepentingannya.
-                        </li>
-                        <li>
-                          <b>SHAP Local</b>: Analisis kontribusi setiap fitur
-                          terhadap prediksi spesifik Anda (dampak
-                          positif/negatif).
-                        </li>
-                        <li>
-                          <b>Bar Plot</b>: Visualisasi dampak fitur-fitur utama
-                          terhadap prediksi rating keseluruhan.
-                        </li>
-                        <li>
-                          <b>Waterfall Plot</b>: Visualisasi kontribusi
-                          berurutan fitur-fitur dari baseline hingga prediksi
-                          akhir.
-                        </li>
-                        <li>
-                          <b>Force Plot</b>: Visualisasi interaktif yang
-                          menunjukkan bagaimana fitur-fitur mendorong prediksi
-                          naik atau turun dari baseline.
-                        </li>
-                      </ul>
+                    <DialogDescription asChild>
+                      <div className="text-sm sm:text-base">
+                        <ul className="list-disc pl-5 space-y-2 text-left break-words">
+                          <li>
+                            <b>Predicted Rating</b>: Rating aplikasi yang
+                            diestimasikan berdasarkan data yang Anda masukkan.
+                          </li>
+                          <li>
+                            <b>Confidence Interval</b>: Rentang kemungkinan
+                            nilai rating sebenarnya, menunjukkan tingkat
+                            kepastian dari prediksi.
+                          </li>
+                          <li>
+                            <b>Input Summary</b>: Ringkasan data yang Anda
+                            berikan ke sistem.
+                          </li>
+                          <li>
+                            <b>Feature Importance</b>: Fitur-fitur yang paling
+                            berpengaruh untuk prediksi rating, diurutkan
+                            berdasarkan tingkat kepentingannya.
+                          </li>
+                          <li>
+                            <b>SHAP Local</b>: Analisis kontribusi setiap fitur
+                            terhadap prediksi spesifik Anda (dampak
+                            positif/negatif).
+                          </li>
+                          <li>
+                            <b>Bar Plot</b>: Visualisasi dampak fitur-fitur
+                            utama terhadap prediksi rating keseluruhan.
+                          </li>
+                          <li>
+                            <b>Waterfall Plot</b>: Visualisasi kontribusi
+                            berurutan fitur-fitur dari baseline hingga prediksi
+                            akhir.
+                          </li>
+                          <li>
+                            <b>Force Plot</b>: Visualisasi interaktif yang
+                            menunjukkan bagaimana fitur-fitur mendorong prediksi
+                            naik atau turun dari baseline.
+                          </li>
+                        </ul>
+                      </div>
                     </DialogDescription>
                   </DialogHeader>
                 </DialogContent>

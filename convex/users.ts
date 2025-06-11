@@ -7,7 +7,6 @@ import {
 } from './_generated/server';
 import { getUserId } from './utils';
 
-
 export const getUser = query({
   args: {},
   handler: async (ctx, args) => {
