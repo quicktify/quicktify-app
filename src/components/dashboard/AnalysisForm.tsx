@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/card';
 import { LimitOverlay } from '@/components/ui/limit-overlay';
 import { useLimitCheck } from '@/hooks/useLimitCheck';
+import { getDisplayMode } from '@/lib/config';
 
 const SORT_OPTIONS = [
   { value: 'NEWEST', label: 'Terbaru', desc: 'Ulasan terbaru' },
@@ -49,8 +50,9 @@ export const AnalysisForm = ({
   isLoading,
   resetForm = false,
 }: AnalysisFormProps) => {
-  // Check limit status
+  // Check limit status and mode
   const limitCheck = useLimitCheck('analysis');
+  const currentMode = getDisplayMode();
 
   // State Form
   const [appId, setAppId] = useState('');
@@ -76,6 +78,17 @@ export const AnalysisForm = ({
     // Update referensi state loading sebelumnya
     prevLoadingRef.current = isLoading;
   }, [isLoading]);
+
+  // Reset maxReview jika mode DEMO dan user memilih opsi yang tidak diizinkan
+  useEffect(() => {
+    if (
+      currentMode === 'DEMO' &&
+      (maxReview === '5000' || maxReview === '10000' || maxReview === 'custom')
+    ) {
+      setMaxReview('1000');
+      setCustomMax('');
+    }
+  }, [currentMode, maxReview]);
 
   // Fungsi untuk me-reset semua nilai form
   const resetFormValues = () => {
@@ -238,7 +251,14 @@ export const AnalysisForm = ({
                 )}
               </div>
               <div>
-                <Label htmlFor="max-review">Jumlah Maksimum Ulasan</Label>
+                <Label htmlFor="max-review">
+                  Jumlah Maksimum Ulasan
+                  {currentMode === 'DEMO' && (
+                    <span className="text-xs text-amber-600 dark:text-amber-400 ml-2">
+                      (Dibatasi untuk mode demo)
+                    </span>
+                  )}
+                </Label>
                 <div className="flex gap-2">
                   <Select
                     value={maxReview}
@@ -250,12 +270,48 @@ export const AnalysisForm = ({
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="1000">1000</SelectItem>
-                      <SelectItem value="5000">5000</SelectItem>
-                      <SelectItem value="10000">10000</SelectItem>
-                      <SelectItem value="custom">Custom</SelectItem>
+                      <SelectItem
+                        value="5000"
+                        disabled={currentMode === 'DEMO'}
+                        className={
+                          currentMode === 'DEMO'
+                            ? 'opacity-50 cursor-not-allowed'
+                            : ''
+                        }
+                      >
+                        5000{' '}
+                        {currentMode === 'DEMO' &&
+                          '(Tidak tersedia di mode demo)'}
+                      </SelectItem>
+                      <SelectItem
+                        value="10000"
+                        disabled={currentMode === 'DEMO'}
+                        className={
+                          currentMode === 'DEMO'
+                            ? 'opacity-50 cursor-not-allowed'
+                            : ''
+                        }
+                      >
+                        10000{' '}
+                        {currentMode === 'DEMO' &&
+                          '(Tidak tersedia di mode demo)'}
+                      </SelectItem>
+                      <SelectItem
+                        value="custom"
+                        disabled={currentMode === 'DEMO'}
+                        className={
+                          currentMode === 'DEMO'
+                            ? 'opacity-50 cursor-not-allowed'
+                            : ''
+                        }
+                      >
+                        Custom{' '}
+                        {currentMode === 'DEMO' &&
+                          '(Tidak tersedia di mode demo)'}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
-                  {maxReview === 'custom' && (
+                  {maxReview === 'custom' && currentMode !== 'DEMO' && (
                     <Input
                       type="number"
                       min={1}
@@ -275,6 +331,12 @@ export const AnalysisForm = ({
                     />
                   )}
                 </div>
+                {currentMode === 'DEMO' && (
+                  <div className="text-xs text-amber-600 dark:text-amber-400 mt-2 p-2 bg-amber-50 dark:bg-amber-900/20 rounded border border-amber-200 dark:border-amber-800">
+                    💡 Mode demo dibatasi maksimal 1000 ulasan untuk mencegah
+                    throttling dari Google Play Store
+                  </div>
+                )}
                 {maxReview === 'custom' &&
                   customMax &&
                   error &&
