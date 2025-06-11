@@ -124,8 +124,15 @@ const RatingEstimation = () => {
     setInputSize('');
   };
 
-  const { result, loading, summaryLoading, error, summaryError, handleSubmit } =
-    useRatingEstimationData(resetForm);
+  const {
+    result,
+    loading,
+    summaryLoading,
+    error,
+    summaryError,
+    handleSubmit,
+    isInitialLoading,
+  } = useRatingEstimationData(resetForm);
 
   // Validasi: semua field harus terisi
   const isFormValid =
@@ -470,13 +477,15 @@ const RatingEstimation = () => {
                               <span className="flex items-center gap-2">
                                 {cr === 'Everyone'
                                   ? '👶'
-                                  : cr === 'Teen'
-                                    ? '👦'
-                                    : cr === 'Mature 17+'
-                                      ? '🧑'
-                                      : cr === 'Adults only 18+'
-                                        ? '👨'
-                                        : '❓'}{' '}
+                                  : cr === 'Everyone 10+'
+                                    ? '👧'
+                                    : cr === 'Teen'
+                                      ? '👦'
+                                      : cr === 'Mature 17+'
+                                        ? '🧑'
+                                        : cr === 'Adults only 18+'
+                                          ? '👨'
+                                          : '❓'}{' '}
                                 {cr}
                               </span>
                             </SelectItem>
@@ -747,7 +756,7 @@ const RatingEstimation = () => {
         </Card>
 
         {/* Hasil Prediksi */}
-        {loading ? null : !result ? (
+        {loading || isInitialLoading ? (
           <Card className="mb-8">
             <CardHeader>
               <Skeleton className="h-8 w-1/2 mb-4" />
@@ -765,7 +774,7 @@ const RatingEstimation = () => {
               <Skeleton className="h-4 w-2/3 mt-2" />
             </CardContent>
           </Card>
-        ) : (
+        ) : result ? (
           <>
             <Card className="bg-gradient-to-br from-quicktify-primary/10 to-background/80 dark:to-background/60 border border-white/30 dark:border-black/30 shadow-lg mb-8 relative">
               {/* Info Button */}
@@ -1083,7 +1092,7 @@ const RatingEstimation = () => {
               </CardContent>
             </Card>
           </>
-        )}
+        ) : null}
       </div>
     </DashboardLayout>
   );

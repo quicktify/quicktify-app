@@ -179,6 +179,9 @@ export function useRatingEstimationData(onSuccess?: () => void) {
     };
   }
 
+  // Check if initial data is loading
+  const isInitialLoading = user && lastEstimation === undefined;
+
   return {
     user,
     input,
@@ -189,5 +192,6 @@ export function useRatingEstimationData(onSuccess?: () => void) {
     error,
     summaryError,
     handleSubmit,
+    isInitialLoading,
   };
 }
