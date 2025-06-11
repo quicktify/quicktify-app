@@ -30,8 +30,6 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            {/* <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} /> */}
 
             {/* Protected Routes */}
             <Route
