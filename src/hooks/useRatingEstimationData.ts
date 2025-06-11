@@ -67,6 +67,10 @@ export function useRatingEstimationData(onSuccess?: () => void) {
     setError('');
     setResult(null);
     setSummaryError('');
+
+    // Check limit if enabled (will be handled by UI layer with useLimitCheck hook)
+    // The actual blocking is done in the UI components
+
     try {
       // 1. Request prediction API
       const model_choice = 'rf_tuned';

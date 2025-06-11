@@ -32,6 +32,9 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { LoadingModal } from '@/components/dashboard/LoadingModal';
+import { LimitOverlay } from '@/components/ui/limit-overlay';
+import { LimitStatus } from '@/components/ui/limit-status';
+import { useLimitCheck } from '@/hooks/useLimitCheck';
 
 const CATEGORY_CHOICES = [
   'Adventure',
@@ -111,6 +114,9 @@ const initialForm: RatingEstimationInput = {
 
 const RatingEstimation = () => {
   const navigate = useNavigate();
+  // Check limit status
+  const limitCheck = useLimitCheck('estimation');
+
   const [form, setForm] = useState<RatingEstimationInput>(initialForm);
   const [inputRatingCount, setInputRatingCount] = useState('');
   const [inputSize, setInputSize] = useState('');
@@ -254,6 +260,16 @@ const RatingEstimation = () => {
             </Button>
           </div>
         </div>
+
+        {/* Limit Status Display */}
+        {limitCheck.shouldShowLimit && (
+          <LimitStatus
+            currentCount={limitCheck.currentCount}
+            maxLimit={limitCheck.maxLimit}
+            type="estimasi"
+            className="mb-8"
+          />
+        )}
 
         {/* Form Input */}
         <Card className="bg-gradient-to-br from-quicktify-primary/10 to-background/80 dark:to-background/60 border border-white/30 dark:border-black/30 shadow-lg mb-8 relative">
@@ -729,7 +745,9 @@ const RatingEstimation = () => {
                 </div>
                 <Button
                   type="submit"
-                  disabled={!isFormValid || loading}
+                  disabled={
+                    !isFormValid || loading || limitCheck.isLimitReached
+                  }
                   className="px-8 py-3 text-base font-semibold bg-gradient-to-r from-quicktify-primary to-quicktify-accent hover:from-quicktify-primary/90 hover:to-quicktify-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   {loading ? (
@@ -754,6 +772,14 @@ const RatingEstimation = () => {
                 </div>
               </div>
             )}
+
+            {/* Limit Overlay */}
+            <LimitOverlay
+              isVisible={
+                limitCheck.shouldShowLimit && limitCheck.isLimitReached
+              }
+              message={limitCheck.limitMessage}
+            />
           </CardContent>
         </Card>
 

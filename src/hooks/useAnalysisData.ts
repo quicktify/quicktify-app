@@ -289,6 +289,9 @@ export function useAnalysisData() {
       return;
     }
 
+    // Check limit if enabled (will be handled by UI layer with useLimitCheck hook)
+    // The actual blocking is done in the UI components
+
     setLoadingStep('fetching-reviews');
     setLoadingMessage(
       activeSection === 'app'

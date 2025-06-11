@@ -20,6 +20,109 @@ export const getUser = query({
   },
 });
 
+// New function to get user usage counts for the current month
+export const getUserUsageCounts = query({
+  args: {},
+  handler: async (ctx, args) => {
+    const userId = await getUserId(ctx);
+
+    if (!userId) {
+      return { analysisCount: 0, estimationCount: 0 };
+    }
+
+    // Get start of current month timestamp
+    const now = new Date();
+    const startOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    ).getTime();
+
+    // Count analysis records from this month
+    const analysisRecords = await ctx.db
+      .query('analysis')
+      .withIndex('by_userId', (q) => q.eq('userId', userId))
+      .filter((q) => q.gte(q.field('createdAt'), startOfMonth))
+      .collect();
+
+    // Count rating estimation records from this month
+    const estimationRecords = await ctx.db
+      .query('ratingEstimations')
+      .withIndex('by_userId', (q) => q.eq('userId', userId))
+      .filter((q) => q.gte(q.field('createdAt'), startOfMonth))
+      .collect();
+
+    return {
+      analysisCount: analysisRecords.length,
+      estimationCount: estimationRecords.length,
+    };
+  },
+});
+
+// Helper function to check if user has reached analysis limit
+export const checkAnalysisLimit = query({
+  args: { limit: v.number() },
+  handler: async (ctx, args) => {
+    const userId = await getUserId(ctx);
+
+    if (!userId) {
+      return { hasReachedLimit: false, currentCount: 0 };
+    }
+
+    // Get start of current month timestamp
+    const now = new Date();
+    const startOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    ).getTime();
+
+    // Count analysis records from this month
+    const analysisRecords = await ctx.db
+      .query('analysis')
+      .withIndex('by_userId', (q) => q.eq('userId', userId))
+      .filter((q) => q.gte(q.field('createdAt'), startOfMonth))
+      .collect();
+
+    return {
+      hasReachedLimit: analysisRecords.length >= args.limit,
+      currentCount: analysisRecords.length,
+    };
+  },
+});
+
+// Helper function to check if user has reached estimation limit
+export const checkEstimationLimit = query({
+  args: { limit: v.number() },
+  handler: async (ctx, args) => {
+    const userId = await getUserId(ctx);
+
+    if (!userId) {
+      return { hasReachedLimit: false, currentCount: 0 };
+    }
+
+    // Get start of current month timestamp
+    const now = new Date();
+    const startOfMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    ).getTime();
+
+    // Count rating estimation records from this month
+    const estimationRecords = await ctx.db
+      .query('ratingEstimations')
+      .withIndex('by_userId', (q) => q.eq('userId', userId))
+      .filter((q) => q.gte(q.field('createdAt'), startOfMonth))
+      .collect();
+
+    return {
+      hasReachedLimit: estimationRecords.length >= args.limit,
+      currentCount: estimationRecords.length,
+    };
+  },
+});
+
 // export const isUserSubscribed = async (ctx: QueryCtx | MutationCtx) => {
 //   const userId = await getUserId(ctx);
 

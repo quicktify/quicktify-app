@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { DashboardLayout } from '@/components/dashboard-layout';
 import { useAnalysisData } from '@/hooks/useAnalysisData';
+import { LimitStatus } from '@/components/ui/limit-status';
+import { useLimitCheck } from '@/hooks/useLimitCheck';
 
 // Import semua komponen dashboard dari barrel export
 import {
@@ -37,6 +39,9 @@ type EmotionPercentagesType = {
 };
 
 const Dashboard = () => {
+  // Check limit status for analysis
+  const limitCheck = useLimitCheck('analysis');
+
   // Gunakan custom hook untuk data dan logika
   const {
     // State
@@ -333,6 +338,16 @@ const Dashboard = () => {
             </p>
           </div>
         </div>
+
+        {/* Limit Status Display */}
+        {limitCheck.shouldShowLimit && (
+          <LimitStatus
+            currentCount={limitCheck.currentCount}
+            maxLimit={limitCheck.maxLimit}
+            type="analisis"
+            className="mb-8"
+          />
+        )}
 
         {/* Form Analisis */}
         <AnalysisForm

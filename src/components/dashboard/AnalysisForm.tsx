@@ -18,6 +18,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { LimitOverlay } from '@/components/ui/limit-overlay';
+import { useLimitCheck } from '@/hooks/useLimitCheck';
 
 const SORT_OPTIONS = [
   { value: 'NEWEST', label: 'Terbaru', desc: 'Ulasan terbaru' },
@@ -47,6 +49,9 @@ export const AnalysisForm = ({
   isLoading,
   resetForm = false,
 }: AnalysisFormProps) => {
+  // Check limit status
+  const limitCheck = useLimitCheck('analysis');
+
   // State Form
   const [appId, setAppId] = useState('');
   const [sort, setSort] = useState('');
@@ -168,7 +173,7 @@ export const AnalysisForm = ({
   );
 
   return (
-    <Card>
+    <Card className="relative">
       <CardHeader>
         <CardTitle className="flex items-center gap-3 text-2xl">
           <span className="bg-quicktify-primary/20 p-2 rounded-full">📊</span>
@@ -382,12 +387,19 @@ export const AnalysisForm = ({
               (!appId && !csvFile) ||
               isAppIdError ||
               isSortError ||
-              isCsvError
+              isCsvError ||
+              limitCheck.isLimitReached
             }
           >
             {isLoading ? 'Menganalisis...' : 'Analisis Sekarang'}
           </Button>
         </form>
+
+        {/* Limit Overlay */}
+        <LimitOverlay
+          isVisible={limitCheck.shouldShowLimit && limitCheck.isLimitReached}
+          message={limitCheck.limitMessage}
+        />
       </CardContent>
     </Card>
   );
