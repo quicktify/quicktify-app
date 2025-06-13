@@ -1,14 +1,14 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { BarChart2, AlertCircle, TrendingUp, Code } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import {
   containerVariants,
   itemVariants,
   textRevealVariants,
 } from '@/components/animated-section';
 
-const cardContentVariants = {
+const cardContentVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -18,7 +18,7 @@ const cardContentVariants = {
   },
 };
 
-const iconVariants = {
+const iconVariants: Variants = {
   hidden: {
     scale: 0,
     rotate: -180,
@@ -27,14 +27,14 @@ const iconVariants = {
     scale: 1,
     rotate: 0,
     transition: {
-      type: 'spring',
+      type: 'spring' as const,
       stiffness: 200,
       damping: 15,
     },
   },
 };
 
-const chartBarVariants = {
+const chartBarVariants: Variants = {
   hidden: {
     scaleY: 0,
     opacity: 0,
@@ -44,12 +44,12 @@ const chartBarVariants = {
     opacity: 1,
     transition: {
       duration: 0.6,
-      ease: 'easeOut',
+      ease: [0.25, 0.25, 0, 1] as const,
     },
   },
 };
 
-const tagVariants = {
+const tagVariants: Variants = {
   hidden: {
     opacity: 0,
     scale: 0.8,
@@ -65,7 +65,7 @@ const tagVariants = {
   },
 };
 
-const spamItemVariants = {
+const spamItemVariants: Variants = {
   hidden: {
     opacity: 0,
     x: -20,
@@ -79,7 +79,7 @@ const spamItemVariants = {
   },
 };
 
-const pulseVariants = {
+const pulseVariants: Variants = {
   hidden: {
     opacity: 0,
   },
@@ -520,7 +520,7 @@ export function FeaturesSection() {
                                   scale: 1,
                                   rotate: 0,
                                   transition: {
-                                    type: 'spring',
+                                    type: 'spring' as const,
                                     stiffness: 150,
                                     damping: 10,
                                   },
@@ -551,7 +551,7 @@ export function FeaturesSection() {
                                     opacity: 1,
                                     scale: 1,
                                     transition: {
-                                      type: 'spring',
+                                      type: 'spring' as const,
                                       stiffness: 300,
                                       damping: 20,
                                     },
