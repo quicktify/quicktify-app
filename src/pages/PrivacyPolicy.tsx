@@ -3,12 +3,9 @@ import { Footer } from "@/components/footer";
 import { NavBar } from "@/components/nav-bar";
 
 const PrivacyPolicy = () => {
-  // This would normally come from an auth context/provider
-  const isLoggedIn = false;
-  
   return (
     <div className="min-h-screen flex flex-col">
-      <NavBar isLoggedIn={isLoggedIn} />
+      <NavBar/>
       <main className="flex-1 py-12">
         <div className="container">
           <div className="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
@@ -46,10 +43,14 @@ const PrivacyPolicy = () => {
               </p>
               <ul>
                 <li>Log aktivitas di platform</li>
-                <li>Link aplikasi Google Play Store yang Anda analisis</li>
-                <li>File CSV ulasan yang Anda unggah</li>
+                <li>App Id aplikasi Google Play Store yang Anda analisis</li>
+                <li>File CSV ulasan yang Anda unggah untuk analisis</li>
                 <li>Hasil analisis yang dihasilkan dari data Anda</li>
+                <li>Hasil estimasi rating aplikasi yang dihasilkan dari data Anda</li>
+                <li>Hasil ringkasan AI yang dihasilkan dari data Anda</li>
                 <li>Preferensi dan pengaturan akun Anda</li>
+                <li>Metadata aplikasi yang Anda masukkan untuk analisis</li>
+                <li>Hasil deteksi spam dan tidak relevan yang dihasilkan dari data Anda</li>
               </ul>
               
               <h3 className="text-xl font-semibold mb-2">2.3 Cookies dan Teknologi Pelacakan</h3>

@@ -3,12 +3,9 @@ import { Footer } from "@/components/footer";
 import { NavBar } from "@/components/nav-bar";
 
 const TermsOfService = () => {
-  // This would normally come from an auth context/provider
-  const isLoggedIn = false;
-  
   return (
     <div className="min-h-screen flex flex-col">
-      <NavBar isLoggedIn={isLoggedIn} />
+      <NavBar/>
       <main className="flex-1 py-12">
         <div className="container">
           <div className="prose prose-lg dark:prose-invert max-w-4xl mx-auto">
@@ -44,12 +41,12 @@ const TermsOfService = () => {
               </p>
               <ul>
                 <li>Analisis Sentimen dan Emosi: Mengkategorikan dan menganalisis sentimen dan emosi dari ulasan pengguna.</li>
-                <li>Deteksi Spam: Mengidentifikasi dan memfilter ulasan yang berpotensi spam.</li>
-                <li>Prediksi Rating/Popularitas: Memperkirakan tren rating dan popularitas berdasarkan data historis.</li>
-                <li>Ringkasan AI (dengan Gemini 2.0 Flash): Membuat ringkasan dan insight dari data analisis.</li>
+                <li>Deteksi Spam & Tidak Relevan: Mengidentifikasi dan memfilter ulasan yang berpotensi spam dan tidak relevan.</li>
+                <li>Estimasi Rating Aplikasi: Memperkirakan tren rating dan popularitas berdasarkan data historis.</li>
+                <li>Ringkasan AI (dengan Gemini 2.0 Flash): Membuat ringkasan dan insight dari data analisis dan estimasi.</li>
               </ul>
               <p>
-                Kami mengumpulkan data melalui API Google Play Store atau file CSV yang Anda unggah. 
+                Kami mengumpulkan data melalui API Google Play Store atau file CSV yang Anda unggah untuk analisis, dan metadata aplikasi dari input-input yang Anda berikan. 
                 Semua fitur di atas tersedia sesuai dengan paket langganan Anda.
               </p>
             </section>
