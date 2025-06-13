@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { LimitOverlay } from '@/components/ui/limit-overlay';
+import { LimitMessage } from '@/components/ui/limit-overlay';
 import { useLimitCheck } from '@/hooks/useLimitCheck';
 import { getDisplayMode } from '@/lib/config';
 
@@ -184,6 +184,11 @@ export const AnalysisForm = ({
     !isSortError &&
     !isCsvError
   );
+
+  // Jika limit tercapai, tampilkan LimitMessage
+  if (limitCheck.shouldShowLimit && limitCheck.isLimitReached) {
+    return <LimitMessage message={limitCheck.limitMessage} />;
+  }
 
   return (
     <Card className="relative">
@@ -456,12 +461,6 @@ export const AnalysisForm = ({
             {isLoading ? 'Menganalisis...' : 'Analisis Sekarang'}
           </Button>
         </form>
-
-        {/* Limit Overlay */}
-        <LimitOverlay
-          isVisible={limitCheck.shouldShowLimit && limitCheck.isLimitReached}
-          message={limitCheck.limitMessage}
-        />
       </CardContent>
     </Card>
   );

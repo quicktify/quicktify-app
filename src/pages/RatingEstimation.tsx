@@ -32,7 +32,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { LoadingModal } from '@/components/dashboard/LoadingModal';
-import { LimitOverlay } from '@/components/ui/limit-overlay';
+import { LimitMessage } from '@/components/ui/limit-overlay';
 import { LimitStatus } from '@/components/ui/limit-status';
 import { useLimitCheck } from '@/hooks/useLimitCheck';
 
@@ -272,516 +272,517 @@ const RatingEstimation = () => {
         )}
 
         {/* Form Input */}
-        <Card className="bg-gradient-to-br from-quicktify-primary/10 to-background/80 dark:to-background/60 border border-white/30 dark:border-black/30 shadow-lg mb-8 relative">
-          {/* Info Button */}
-          <button
-            className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors z-10"
-            type="button"
-            aria-label="Section information"
-            onClick={() => setOpenInfoInput(true)}
-          >
-            <Info className="w-5 h-5 text-muted-foreground" />
-          </button>
-          {/* Info Dialog */}
-          <Dialog open={openInfoInput} onOpenChange={setOpenInfoInput}>
-            <DialogContent className="max-w-lg w-[90vw] sm:w-full p-4 sm:p-8 rounded-xl overflow-y-auto max-h-[80vh]">
-              <DialogHeader>
-                <DialogTitle className="text-lg sm:text-2xl mb-2">
-                  Tentang Form Estimasi Rating Aplikasi
-                </DialogTitle>
-                <DialogDescription asChild>
-                  <div className="text-sm sm:text-base">
-                    <ul className="list-disc pl-5 space-y-2 text-left break-words">
-                      <li>
-                        <b>Category</b>: Kategori aplikasi yang terdaftar di
-                        Play Store.
-                      </li>
-                      <li>
-                        <b>Rating Count</b>: Total jumlah rating yang diterima
-                        aplikasi Anda.
-                      </li>
-                      <li>
-                        <b>Installs</b>: Perkiraan jumlah kali aplikasi Anda
-                        diinstal.
-                      </li>
-                      <li>
-                        <b>Size (MB)</b>: Ukuran aplikasi Anda dalam megabyte.
-                      </li>
-                      <li>
-                        <b>Content Rating</b>: Rating usia untuk aplikasi Anda.
-                      </li>
-                      <li>
-                        <b>App Type</b>: Apakah aplikasi Anda Gratis atau
-                        Berbayar.
-                      </li>
-                      <li>
-                        <b>Ad Supported</b>: Apakah aplikasi Anda menampilkan
-                        iklan.
-                      </li>
-                      <li>
-                        <b>In App Purchases</b>: Apakah aplikasi Anda menawarkan
-                        pembelian dalam aplikasi.
-                      </li>
-                      <li>
-                        <b>Editors Choice</b>: Apakah aplikasi Anda telah
-                        menerima badge "Editor's Choice" di Play Store.
-                      </li>
-                    </ul>
-                  </div>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-2xl">
-              <span className="bg-quicktify-primary/20 p-2 rounded-full">
-                📝
-              </span>
-              Mulai Estimasi
-            </CardTitle>
-            <CardDescription className="text-base mb-12">
-              Lengkapi semua informasi berikut untuk mendapatkan estimasi rating
-              yang akurat
-            </CardDescription>
-
-            {/* Progress Indicator */}
-            <div className="pt-8 pb-4 space-y-4">
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Progress Pengisian Form</span>
-                <span>
-                  {Math.round(
-                    (((form.category ? 1 : 0) +
-                      (form.rating_count > 0 ? 1 : 0) +
-                      (form.installs > 0 ? 1 : 0) +
-                      (form.size > 0 ? 1 : 0) +
-                      (form.content_rating ? 1 : 0) +
-                      (form.app_type ? 1 : 0) +
-                      (form.ad_supported !== null ? 1 : 0) +
-                      (form.in_app_purchases !== null ? 1 : 0) +
-                      (form.editors_choice !== null ? 1 : 0)) /
-                      9) *
-                      100
-                  )}
-                  %
+        {limitCheck.shouldShowLimit && limitCheck.isLimitReached ? (
+          <LimitMessage message={limitCheck.limitMessage} />
+        ) : (
+          <Card className="bg-gradient-to-br from-quicktify-primary/10 to-background/80 dark:to-background/60 border border-white/30 dark:border-black/30 shadow-lg mb-8 relative">
+            {/* Info Button */}
+            <button
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors z-10"
+              type="button"
+              aria-label="Section information"
+              onClick={() => setOpenInfoInput(true)}
+            >
+              <Info className="w-5 h-5 text-muted-foreground" />
+            </button>
+            {/* Info Dialog */}
+            <Dialog open={openInfoInput} onOpenChange={setOpenInfoInput}>
+              <DialogContent className="max-w-lg w-[90vw] sm:w-full p-4 sm:p-8 rounded-xl overflow-y-auto max-h-[80vh]">
+                <DialogHeader>
+                  <DialogTitle className="text-lg sm:text-2xl mb-2">
+                    Tentang Form Estimasi Rating Aplikasi
+                  </DialogTitle>
+                  <DialogDescription asChild>
+                    <div className="text-sm sm:text-base">
+                      <ul className="list-disc pl-5 space-y-2 text-left break-words">
+                        <li>
+                          <b>Category</b>: Kategori aplikasi yang terdaftar di
+                          Play Store.
+                        </li>
+                        <li>
+                          <b>Rating Count</b>: Total jumlah rating yang diterima
+                          aplikasi Anda.
+                        </li>
+                        <li>
+                          <b>Installs</b>: Perkiraan jumlah kali aplikasi Anda
+                          diinstal.
+                        </li>
+                        <li>
+                          <b>Size (MB)</b>: Ukuran aplikasi Anda dalam megabyte.
+                        </li>
+                        <li>
+                          <b>Content Rating</b>: Rating usia untuk aplikasi
+                          Anda.
+                        </li>
+                        <li>
+                          <b>App Type</b>: Apakah aplikasi Anda Gratis atau
+                          Berbayar.
+                        </li>
+                        <li>
+                          <b>Ad Supported</b>: Apakah aplikasi Anda menampilkan
+                          iklan.
+                        </li>
+                        <li>
+                          <b>In App Purchases</b>: Apakah aplikasi Anda
+                          menawarkan pembelian dalam aplikasi.
+                        </li>
+                        <li>
+                          <b>Editors Choice</b>: Apakah aplikasi Anda telah
+                          menerima badge "Editor's Choice" di Play Store.
+                        </li>
+                      </ul>
+                    </div>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-2xl">
+                <span className="bg-quicktify-primary/20 p-2 rounded-full">
+                  📝
                 </span>
-              </div>
-              <div className="w-full bg-muted rounded-full h-2">
-                <div
-                  className="bg-gradient-to-r from-quicktify-primary to-quicktify-accent h-2 rounded-full transition-all duration-300"
-                  style={{
-                    width: `${Math.round((((form.category ? 1 : 0) + (form.rating_count > 0 ? 1 : 0) + (form.installs > 0 ? 1 : 0) + (form.size > 0 ? 1 : 0) + (form.content_rating ? 1 : 0) + (form.app_type ? 1 : 0) + (form.ad_supported !== null ? 1 : 0) + (form.in_app_purchases !== null ? 1 : 0) + (form.editors_choice !== null ? 1 : 0)) / 9) * 100)}%`,
-                  }}
-                />
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-8">
-            <form onSubmit={onSubmit} className="space-y-8">
-              {/* Card 1: Basic App Information */}
-              <Card className="bg-gradient-to-br from-blue-50/50 to-indigo-50/30 dark:from-blue-950/30 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800 hover:shadow-lg transition-all duration-300">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-lg">
-                    <span className="bg-blue-500/20 p-2 rounded-full text-blue-600 dark:text-blue-400">
-                      ℹ️
-                    </span>
-                    Informasi Dasar Aplikasi
-                  </CardTitle>
-                  <CardDescription>
-                    Data fundamental tentang aplikasi Anda
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-blue-600 dark:text-blue-400">
-                          🏷️
-                        </span>
-                        Category
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Select
-                        value={form.category}
-                        onValueChange={(v) => handleSelectChange('category', v)}
-                      >
-                        <SelectTrigger className="w-full border-blue-200 dark:border-blue-800 focus:border-blue-400">
-                          <SelectValue placeholder="Pilih kategori aplikasi" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {CATEGORY_CHOICES.map((cat) => (
-                            <SelectItem key={cat} value={cat}>
-                              {cat}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground">
-                        Kategori Play Store untuk aplikasi Anda
-                      </p>
-                    </div>
+                Mulai Estimasi
+              </CardTitle>
+              <CardDescription className="text-base mb-12">
+                Lengkapi semua informasi berikut untuk mendapatkan estimasi
+                rating yang akurat
+              </CardDescription>
 
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-blue-600 dark:text-blue-400">
-                          💰
-                        </span>
-                        App Type
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Select
-                        value={form.app_type}
-                        onValueChange={(v) => handleSelectChange('app_type', v)}
-                      >
-                        <SelectTrigger className="w-full border-blue-200 dark:border-blue-800 focus:border-blue-400">
-                          <SelectValue placeholder="Pilih tipe aplikasi" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {APP_TYPE_CHOICES.map((at) => (
-                            <SelectItem key={at} value={at}>
-                              <span className="flex items-center gap-2">
-                                {at === 'Free' ? '🆓' : '💳'} {at}
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground">
-                        Model monetisasi aplikasi
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-blue-600 dark:text-blue-400">
-                          📦
-                        </span>
-                        Size (MB)
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Input
-                        name="size"
-                        type="text"
-                        value={inputSize}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="Ukuran dalam MB"
-                        className="border-blue-200 dark:border-blue-800 focus:border-blue-400"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Ukuran file APK (maksimal 1500 MB)
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-blue-600 dark:text-blue-400">
-                          🔞
-                        </span>
-                        Content Rating
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Select
-                        value={form.content_rating}
-                        onValueChange={(v) =>
-                          handleSelectChange('content_rating', v)
-                        }
-                      >
-                        <SelectTrigger className="w-full border-blue-200 dark:border-blue-800 focus:border-blue-400">
-                          <SelectValue placeholder="Pilih rating konten" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {CONTENT_RATING_CHOICES.map((cr) => (
-                            <SelectItem key={cr} value={cr}>
-                              <span className="flex items-center gap-2">
-                                {cr === 'Everyone'
-                                  ? '👶'
-                                  : cr === 'Everyone 10+'
-                                    ? '👧'
-                                    : cr === 'Teen'
-                                      ? '👦'
-                                      : cr === 'Mature 17+'
-                                        ? '🧑'
-                                        : cr === 'Adults only 18+'
-                                          ? '👨'
-                                          : '❓'}{' '}
-                                {cr}
-                              </span>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground">
-                        Rating usia untuk konten aplikasi
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Card 2: User Engagement Metrics */}
-              <Card className="bg-gradient-to-br from-emerald-50/50 to-green-50/30 dark:from-emerald-950/30 dark:to-green-950/20 border-emerald-200 dark:border-emerald-800 hover:shadow-lg transition-all duration-300">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-lg">
-                    <span className="bg-emerald-500/20 p-2 rounded-full text-emerald-600 dark:text-emerald-400">
-                      📊
-                    </span>
-                    Metrik Engagement Pengguna
-                  </CardTitle>
-                  <CardDescription>
-                    Data interaksi dan popularitas aplikasi
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-emerald-600 dark:text-emerald-400">
-                          ⭐
-                        </span>
-                        Rating Count
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Input
-                        name="rating_count"
-                        type="text"
-                        value={inputRatingCount}
-                        onChange={handleInputChange}
-                        required
-                        placeholder="Jumlah rating"
-                        className="border-emerald-200 dark:border-emerald-800 focus:border-emerald-400"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Total pengguna yang memberikan rating
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-emerald-600 dark:text-emerald-400">
-                          📥
-                        </span>
-                        Installs
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Select
-                        value={form.installs ? String(form.installs) : ''}
-                        onValueChange={handleInstallsChange}
-                      >
-                        <SelectTrigger className="w-full border-emerald-200 dark:border-emerald-800 focus:border-emerald-400">
-                          <SelectValue placeholder="Pilih jumlah instalasi" />
-                        </SelectTrigger>
-                        <SelectContent className="max-h-60 overflow-y-auto">
-                          {INSTALL_CHOICES.map((num) => (
-                            <SelectItem key={num} value={String(num)}>
-                              📱 {num.toLocaleString()}
-                            </SelectItem>
-                          ))}
-                          <SelectItem key=">1000000000" value=">1000000000">
-                            🚀 {'>'} 1,000,000,000
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground">
-                        Perkiraan total unduhan aplikasi
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Card 3: Monetization & Features */}
-              <Card className="bg-gradient-to-br from-amber-50/50 to-orange-50/30 dark:from-amber-950/30 dark:to-orange-950/20 border-amber-200 dark:border-amber-800 hover:shadow-lg transition-all duration-300">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-lg">
-                    <span className="bg-amber-500/20 p-2 rounded-full text-amber-600 dark:text-amber-400">
-                      ⚙️
-                    </span>
-                    Monetisasi & Fitur Khusus
-                  </CardTitle>
-                  <CardDescription>
-                    Strategi monetisasi dan keunggulan aplikasi
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-amber-600 dark:text-amber-400">
-                          📺
-                        </span>
-                        Ad Supported
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Select
-                        value={
-                          form.ad_supported === null
-                            ? ''
-                            : form.ad_supported
-                              ? 'yes'
-                              : 'no'
-                        }
-                        onValueChange={(v) =>
-                          handleSelectChange('ad_supported', v)
-                        }
-                      >
-                        <SelectTrigger className="w-full border-amber-200 dark:border-amber-800 focus:border-amber-400">
-                          <SelectValue placeholder="Apakah ada iklan?" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="yes">
-                            <span className="flex items-center gap-2">
-                              ✅ Yes
-                            </span>
-                          </SelectItem>
-                          <SelectItem value="no">
-                            <span className="flex items-center gap-2">
-                              ❌ No
-                            </span>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground">
-                        Apakah aplikasi menampilkan iklan
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-amber-600 dark:text-amber-400">
-                          🛒
-                        </span>
-                        In App Purchases
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Select
-                        value={
-                          form.in_app_purchases === null
-                            ? ''
-                            : form.in_app_purchases
-                              ? 'yes'
-                              : 'no'
-                        }
-                        onValueChange={(v) =>
-                          handleSelectChange('in_app_purchases', v)
-                        }
-                      >
-                        <SelectTrigger className="w-full border-amber-200 dark:border-amber-800 focus:border-amber-400">
-                          <SelectValue placeholder="Ada fitur beli premium?" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="yes">
-                            <span className="flex items-center gap-2">
-                              ✅ Yes
-                            </span>
-                          </SelectItem>
-                          <SelectItem value="no">
-                            <span className="flex items-center gap-2">
-                              ❌ No
-                            </span>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground">
-                        Tersedia pembelian dalam aplikasi
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="flex items-center gap-2 font-medium text-sm">
-                        <span className="text-amber-600 dark:text-amber-400">
-                          🏆
-                        </span>
-                        Editors Choice
-                        <span className="text-red-500">*</span>
-                      </label>
-                      <Select
-                        value={
-                          form.editors_choice === null
-                            ? ''
-                            : form.editors_choice
-                              ? 'yes'
-                              : 'no'
-                        }
-                        onValueChange={(v) =>
-                          handleSelectChange('editors_choice', v)
-                        }
-                      >
-                        <SelectTrigger className="w-full border-amber-200 dark:border-amber-800 focus:border-amber-400">
-                          <SelectValue placeholder="Dapat badge editor?" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="yes">
-                            <span className="flex items-center gap-2">
-                              ✅ Yes
-                            </span>
-                          </SelectItem>
-                          <SelectItem value="no">
-                            <span className="flex items-center gap-2">
-                              ❌ No
-                            </span>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <p className="text-xs text-muted-foreground">
-                        Badge pilihan editor Play Store
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Submit Button */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <span className="text-red-500">*</span>
-                    Field wajib diisi
+              {/* Progress Indicator */}
+              <div className="pt-8 pb-4 space-y-4">
+                <div className="flex justify-between text-sm text-muted-foreground">
+                  <span>Progress Pengisian Form</span>
+                  <span>
+                    {Math.round(
+                      (((form.category ? 1 : 0) +
+                        (form.rating_count > 0 ? 1 : 0) +
+                        (form.installs > 0 ? 1 : 0) +
+                        (form.size > 0 ? 1 : 0) +
+                        (form.content_rating ? 1 : 0) +
+                        (form.app_type ? 1 : 0) +
+                        (form.ad_supported !== null ? 1 : 0) +
+                        (form.in_app_purchases !== null ? 1 : 0) +
+                        (form.editors_choice !== null ? 1 : 0)) /
+                        9) *
+                        100
+                    )}
+                    %
                   </span>
-                  {isFormValid && (
-                    <span className="flex items-center gap-1 text-green-600 dark:text-green-400">
-                      ✅ Semua data lengkap
-                    </span>
-                  )}
                 </div>
-                <Button
-                  type="submit"
-                  disabled={
-                    !isFormValid || loading || limitCheck.isLimitReached
-                  }
-                  className="px-8 py-3 text-base font-semibold bg-gradient-to-r from-quicktify-primary to-quicktify-accent hover:from-quicktify-primary/90 hover:to-quicktify-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  {loading ? (
-                    <span className="flex items-center gap-2">
-                      <span className="animate-spin">⏳</span>
-                      Memproses...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-2">
-                      🚀 Estimasi Sekarang
-                    </span>
-                  )}
-                </Button>
-              </div>
-            </form>
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg">
-                <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
-                  <span>❌</span>
-                  <span className="font-medium">Error:</span>
-                  <span>{error}</span>
+                <div className="w-full bg-muted rounded-full h-2">
+                  <div
+                    className="bg-gradient-to-r from-quicktify-primary to-quicktify-accent h-2 rounded-full transition-all duration-300"
+                    style={{
+                      width: `${Math.round((((form.category ? 1 : 0) + (form.rating_count > 0 ? 1 : 0) + (form.installs > 0 ? 1 : 0) + (form.size > 0 ? 1 : 0) + (form.content_rating ? 1 : 0) + (form.app_type ? 1 : 0) + (form.ad_supported !== null ? 1 : 0) + (form.in_app_purchases !== null ? 1 : 0) + (form.editors_choice !== null ? 1 : 0)) / 9) * 100)}%`,
+                    }}
+                  />
                 </div>
               </div>
-            )}
+            </CardHeader>
+            <CardContent className="space-y-8">
+              <form onSubmit={onSubmit} className="space-y-8">
+                {/* Card 1: Basic App Information */}
+                <Card className="bg-gradient-to-br from-blue-50/50 to-indigo-50/30 dark:from-blue-950/30 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800 hover:shadow-lg transition-all duration-300">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-3 text-lg">
+                      <span className="bg-blue-500/20 p-2 rounded-full text-blue-600 dark:text-blue-400">
+                        ℹ️
+                      </span>
+                      Informasi Dasar Aplikasi
+                    </CardTitle>
+                    <CardDescription>
+                      Data fundamental tentang aplikasi Anda
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-blue-600 dark:text-blue-400">
+                            🏷️
+                          </span>
+                          Category
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Select
+                          value={form.category}
+                          onValueChange={(v) =>
+                            handleSelectChange('category', v)
+                          }
+                        >
+                          <SelectTrigger className="w-full border-blue-200 dark:border-blue-800 focus:border-blue-400">
+                            <SelectValue placeholder="Pilih kategori aplikasi" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {CATEGORY_CHOICES.map((cat) => (
+                              <SelectItem key={cat} value={cat}>
+                                {cat}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Kategori Play Store untuk aplikasi Anda
+                        </p>
+                      </div>
 
-            {/* Limit Overlay */}
-            <LimitOverlay
-              isVisible={
-                limitCheck.shouldShowLimit && limitCheck.isLimitReached
-              }
-              message={limitCheck.limitMessage}
-            />
-          </CardContent>
-        </Card>
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-blue-600 dark:text-blue-400">
+                            💰
+                          </span>
+                          App Type
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Select
+                          value={form.app_type}
+                          onValueChange={(v) =>
+                            handleSelectChange('app_type', v)
+                          }
+                        >
+                          <SelectTrigger className="w-full border-blue-200 dark:border-blue-800 focus:border-blue-400">
+                            <SelectValue placeholder="Pilih tipe aplikasi" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {APP_TYPE_CHOICES.map((at) => (
+                              <SelectItem key={at} value={at}>
+                                <span className="flex items-center gap-2">
+                                  {at === 'Free' ? '🆓' : '💳'} {at}
+                                </span>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Model monetisasi aplikasi
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-blue-600 dark:text-blue-400">
+                            📦
+                          </span>
+                          Size (MB)
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Input
+                          name="size"
+                          type="text"
+                          value={inputSize}
+                          onChange={handleInputChange}
+                          required
+                          placeholder="Ukuran dalam MB"
+                          className="border-blue-200 dark:border-blue-800 focus:border-blue-400"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Ukuran file APK (maksimal 1500 MB)
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-blue-600 dark:text-blue-400">
+                            🔞
+                          </span>
+                          Content Rating
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Select
+                          value={form.content_rating}
+                          onValueChange={(v) =>
+                            handleSelectChange('content_rating', v)
+                          }
+                        >
+                          <SelectTrigger className="w-full border-blue-200 dark:border-blue-800 focus:border-blue-400">
+                            <SelectValue placeholder="Pilih rating konten" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {CONTENT_RATING_CHOICES.map((cr) => (
+                              <SelectItem key={cr} value={cr}>
+                                <span className="flex items-center gap-2">
+                                  {cr === 'Everyone'
+                                    ? '👶'
+                                    : cr === 'Everyone 10+'
+                                      ? '👧'
+                                      : cr === 'Teen'
+                                        ? '👦'
+                                        : cr === 'Mature 17+'
+                                          ? '🧑'
+                                          : cr === 'Adults only 18+'
+                                            ? '👨'
+                                            : '❓'}{' '}
+                                  {cr}
+                                </span>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Rating usia untuk konten aplikasi
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Card 2: User Engagement Metrics */}
+                <Card className="bg-gradient-to-br from-emerald-50/50 to-green-50/30 dark:from-emerald-950/30 dark:to-green-950/20 border-emerald-200 dark:border-emerald-800 hover:shadow-lg transition-all duration-300">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-3 text-lg">
+                      <span className="bg-emerald-500/20 p-2 rounded-full text-emerald-600 dark:text-emerald-400">
+                        📊
+                      </span>
+                      Metrik Engagement Pengguna
+                    </CardTitle>
+                    <CardDescription>
+                      Data interaksi dan popularitas aplikasi
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-emerald-600 dark:text-emerald-400">
+                            ⭐
+                          </span>
+                          Rating Count
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Input
+                          name="rating_count"
+                          type="text"
+                          value={inputRatingCount}
+                          onChange={handleInputChange}
+                          required
+                          placeholder="Jumlah rating"
+                          className="border-emerald-200 dark:border-emerald-800 focus:border-emerald-400"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Total pengguna yang memberikan rating
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-emerald-600 dark:text-emerald-400">
+                            📥
+                          </span>
+                          Installs
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Select
+                          value={form.installs ? String(form.installs) : ''}
+                          onValueChange={handleInstallsChange}
+                        >
+                          <SelectTrigger className="w-full border-emerald-200 dark:border-emerald-800 focus:border-emerald-400">
+                            <SelectValue placeholder="Pilih jumlah instalasi" />
+                          </SelectTrigger>
+                          <SelectContent className="max-h-60 overflow-y-auto">
+                            {INSTALL_CHOICES.map((num) => (
+                              <SelectItem key={num} value={String(num)}>
+                                📱 {num.toLocaleString()}
+                              </SelectItem>
+                            ))}
+                            <SelectItem key=">1000000000" value=">1000000000">
+                              🚀 {'>'} 1,000,000,000
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Perkiraan total unduhan aplikasi
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Card 3: Monetization & Features */}
+                <Card className="bg-gradient-to-br from-amber-50/50 to-orange-50/30 dark:from-amber-950/30 dark:to-orange-950/20 border-amber-200 dark:border-amber-800 hover:shadow-lg transition-all duration-300">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center gap-3 text-lg">
+                      <span className="bg-amber-500/20 p-2 rounded-full text-amber-600 dark:text-amber-400">
+                        ⚙️
+                      </span>
+                      Monetisasi & Fitur Khusus
+                    </CardTitle>
+                    <CardDescription>
+                      Strategi monetisasi dan keunggulan aplikasi
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-amber-600 dark:text-amber-400">
+                            📺
+                          </span>
+                          Ad Supported
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Select
+                          value={
+                            form.ad_supported === null
+                              ? ''
+                              : form.ad_supported
+                                ? 'yes'
+                                : 'no'
+                          }
+                          onValueChange={(v) =>
+                            handleSelectChange('ad_supported', v)
+                          }
+                        >
+                          <SelectTrigger className="w-full border-amber-200 dark:border-amber-800 focus:border-amber-400">
+                            <SelectValue placeholder="Apakah ada iklan?" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="yes">
+                              <span className="flex items-center gap-2">
+                                ✅ Yes
+                              </span>
+                            </SelectItem>
+                            <SelectItem value="no">
+                              <span className="flex items-center gap-2">
+                                ❌ No
+                              </span>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Apakah aplikasi menampilkan iklan
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-amber-600 dark:text-amber-400">
+                            🛒
+                          </span>
+                          In App Purchases
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Select
+                          value={
+                            form.in_app_purchases === null
+                              ? ''
+                              : form.in_app_purchases
+                                ? 'yes'
+                                : 'no'
+                          }
+                          onValueChange={(v) =>
+                            handleSelectChange('in_app_purchases', v)
+                          }
+                        >
+                          <SelectTrigger className="w-full border-amber-200 dark:border-amber-800 focus:border-amber-400">
+                            <SelectValue placeholder="Ada fitur beli premium?" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="yes">
+                              <span className="flex items-center gap-2">
+                                ✅ Yes
+                              </span>
+                            </SelectItem>
+                            <SelectItem value="no">
+                              <span className="flex items-center gap-2">
+                                ❌ No
+                              </span>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Tersedia pembelian dalam aplikasi
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="flex items-center gap-2 font-medium text-sm">
+                          <span className="text-amber-600 dark:text-amber-400">
+                            🏆
+                          </span>
+                          Editors Choice
+                          <span className="text-red-500">*</span>
+                        </label>
+                        <Select
+                          value={
+                            form.editors_choice === null
+                              ? ''
+                              : form.editors_choice
+                                ? 'yes'
+                                : 'no'
+                          }
+                          onValueChange={(v) =>
+                            handleSelectChange('editors_choice', v)
+                          }
+                        >
+                          <SelectTrigger className="w-full border-amber-200 dark:border-amber-800 focus:border-amber-400">
+                            <SelectValue placeholder="Dapat badge editor?" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="yes">
+                              <span className="flex items-center gap-2">
+                                ✅ Yes
+                              </span>
+                            </SelectItem>
+                            <SelectItem value="no">
+                              <span className="flex items-center gap-2">
+                                ❌ No
+                              </span>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Badge pilihan editor Play Store
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Submit Button */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <span className="text-red-500">*</span>
+                      Field wajib diisi
+                    </span>
+                    {isFormValid && (
+                      <span className="flex items-center gap-1 text-green-600 dark:text-green-400">
+                        ✅ Semua data lengkap
+                      </span>
+                    )}
+                  </div>
+                  <Button
+                    type="submit"
+                    disabled={
+                      !isFormValid || loading || limitCheck.isLimitReached
+                    }
+                    className="px-8 py-3 text-base font-semibold bg-gradient-to-r from-quicktify-primary to-quicktify-accent hover:from-quicktify-primary/90 hover:to-quicktify-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    {loading ? (
+                      <span className="flex items-center gap-2">
+                        <span className="animate-spin">⏳</span>
+                        Memproses...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        🚀 Estimasi Sekarang
+                      </span>
+                    )}
+                  </Button>
+                </div>
+              </form>
+              {error && (
+                <div className="mt-4 p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg">
+                  <div className="flex items-center gap-2 text-red-600 dark:text-red-400">
+                    <span>❌</span>
+                    <span className="font-medium">Error:</span>
+                    <span>{error}</span>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Hasil Prediksi */}
         {loading || isInitialLoading ? (
