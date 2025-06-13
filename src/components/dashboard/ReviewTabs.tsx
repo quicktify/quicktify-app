@@ -87,26 +87,28 @@ export const SentimentReviewTabs = memo(
             <div className="text-red-500">{error}</div>
           ) : (
             <Tabs defaultValue="positive">
-              <TabsList className="flex w-full overflow-x-auto gap-2 sm:grid sm:grid-cols-3">
-                <TabsTrigger
-                  value="positive"
-                  className="min-w-[120px] sm:min-w-0"
-                >
-                  Positif ({percentages.Positive || 0}%)
-                </TabsTrigger>
-                <TabsTrigger
-                  value="neutral"
-                  className="min-w-[120px] sm:min-w-0"
-                >
-                  Netral ({percentages.Neutral || 0}%)
-                </TabsTrigger>
-                <TabsTrigger
-                  value="negative"
-                  className="min-w-[120px] sm:min-w-0"
-                >
-                  Negatif ({percentages.Negative || 0}%)
-                </TabsTrigger>
-              </TabsList>
+              <div className="w-full overflow-x-auto">
+                <TabsList className="grid w-max min-w-full grid-cols-3 lg:w-full">
+                  <TabsTrigger
+                    value="positive"
+                    className="text-xs sm:text-sm whitespace-nowrap px-2 sm:px-4"
+                  >
+                    Positif ({percentages.Positive || 0}%)
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="neutral"
+                    className="text-xs sm:text-sm whitespace-nowrap px-2 sm:px-4"
+                  >
+                    Netral ({percentages.Neutral || 0}%)
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="negative"
+                    className="text-xs sm:text-sm whitespace-nowrap px-2 sm:px-4"
+                  >
+                    Negatif ({percentages.Negative || 0}%)
+                  </TabsTrigger>
+                </TabsList>
+              </div>
               {['positive', 'neutral', 'negative'].map((tab) => {
                 const reviews = reviewData[tab] || [];
                 const totalPages = Math.ceil(reviews.length / pageSize) || 1;
@@ -237,20 +239,23 @@ export const EmotionReviewTabs = memo(
             <div className="text-red-500">{error}</div>
           ) : (
             <Tabs defaultValue="neutral">
-              <TabsList className="flex w-full overflow-x-auto gap-2 sm:grid sm:grid-cols-6">
-                {tabs.map((tab) => (
-                  <TabsTrigger
-                    key={tab}
-                    value={tab}
-                    className="min-w-[120px] sm:min-w-0"
-                  >
-                    {tab.charAt(0).toUpperCase() + tab.slice(1)} (
-                    {percentages[tab.charAt(0).toUpperCase() + tab.slice(1)] ||
-                      0}
-                    %)
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+              <div className="w-full overflow-x-auto">
+                <TabsList className="grid w-max min-w-full grid-cols-6 lg:w-full">
+                  {tabs.map((tab) => (
+                    <TabsTrigger
+                      key={tab}
+                      value={tab}
+                      className="text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3"
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)} (
+                      {percentages[
+                        tab.charAt(0).toUpperCase() + tab.slice(1)
+                      ] || 0}
+                      %)
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
               {tabs.map((tab) => {
                 const reviews = reviewData[tab] || [];
                 const totalPages = Math.ceil(reviews.length / pageSize) || 1;
@@ -435,11 +440,8 @@ export const SpamTable = memo(
                             {review.review}
                           </TableCell>
                           <TableCell className="sm:table-cell text-right">
-                            <span className="block sm:hidden text-xs text-muted-foreground font-semibold mb-1">
-                              Kategori
-                            </span>
                             <span
-                              className={`px-2 py-1 rounded-full text-xs border ${
+                              className={`px-2 py-1 rounded-full text-xs border whitespace-nowrap inline-block ${
                                 review.category === 'Explicit Spam'
                                   ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100 border-red-300 dark:border-red-800'
                                   : 'bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100 border-amber-300 dark:border-amber-800'
