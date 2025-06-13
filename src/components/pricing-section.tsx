@@ -9,6 +9,13 @@ import {
 } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import {
+  containerVariants,
+  itemVariants,
+  textRevealVariants,
+  scaleVariants,
+} from '@/components/animated-section';
 
 import { SignedIn, SignedOut, SignUpButton } from '@clerk/clerk-react';
 
@@ -16,21 +23,39 @@ export function PricingSection() {
   return (
     <section id="pricing" className="py-16">
       <div className="container">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+          variants={containerVariants}
+        >
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold mb-6"
+            variants={textRevealVariants}
+          >
             Nikmati Semua Fitur Quicktify Secara Gratis!
-          </h2>
-          <p className="text-lg text-muted-foreground">
+          </motion.h2>
+          <motion.p
+            className="text-lg text-muted-foreground"
+            variants={textRevealVariants}
+          >
             Untuk saat ini, Anda dapat mencoba Quicktify tanpa biaya dan
-            melakukan analisis hingga{' '}
+            melakukan analisis ulasan dan estimasi rating hingga{' '}
             <span className="font-semibold text-quicktify-primary">
               30 kali per bulan
             </span>
             .
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="max-w-md mx-auto">
+        <motion.div
+          className="max-w-md mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={scaleVariants}
+        >
           <Card className="border-2 border-quicktify-primary overflow-hidden relative">
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-quicktify-primary to-quicktify-accent"></div>
             {/* Badge Gratis */}
@@ -54,7 +79,7 @@ export function PricingSection() {
               </div>
               <CardDescription>
                 Coba semua fitur premium Quicktify tanpa biaya, maksimal 30
-                analisis per bulan
+                analisis ulasan dan estimasi rating per bulan
               </CardDescription>
             </CardHeader>
 
@@ -62,7 +87,9 @@ export function PricingSection() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-quicktify-primary flex-shrink-0 mt-0.5" />
-                  <span>Maksimal 30 analisis per bulan</span>
+                  <span>
+                    Maksimal 30 analisis ulasan dan estimasi rating per bulan
+                  </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-quicktify-primary flex-shrink-0 mt-0.5" />
@@ -70,15 +97,15 @@ export function PricingSection() {
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-quicktify-primary flex-shrink-0 mt-0.5" />
-                  <span>Analisis Sentimen & Emosi</span>
+                  <span>Analisis Sentimen & Emosi Ulasan</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-quicktify-primary flex-shrink-0 mt-0.5" />
-                  <span>Deteksi Spam</span>
+                  <span>Deteksi Spam dan Tidak Relevan Ulasan</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-quicktify-primary flex-shrink-0 mt-0.5" />
-                  <span>Prediksi Rating/Popularitas</span>
+                  <span>Estimasi Rating Aplikasi</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-quicktify-primary flex-shrink-0 mt-0.5" />
@@ -114,7 +141,7 @@ export function PricingSection() {
               </SignedIn>
             </CardFooter>
           </Card>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { SignedIn, SignedOut, SignUpButton } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import {
+  containerVariants,
+  itemVariants,
+  textRevealVariants,
+  scaleVariants,
+} from '@/components/animated-section';
 // import { Skeleton } from "@/components/ui/skeleton";
 
 export function HeroSection() {
@@ -9,61 +16,77 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-gradient-radial from-quicktify-primary/10 to-transparent dark:from-quicktify-primary/5"></div>
 
       <div className="container relative z-10">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-quicktify-primary to-quicktify-accent bg-clip-text text-transparent">
+        <motion.div
+          className="flex flex-col items-center text-center max-w-4xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.h1
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-quicktify-primary to-quicktify-accent bg-clip-text text-transparent"
+            variants={textRevealVariants}
+          >
             Dapatkan Insight Mendalam dari Ulasan Aplikasi Anda di Google Play
             Store dalam Sekejap!{' '}
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg md:text-xl mb-10 text-muted-foreground max-w-3xl">
+          <motion.p
+            className="text-lg md:text-xl mb-10 text-muted-foreground max-w-3xl"
+            variants={textRevealVariants}
+          >
             Platform analisis cerdas yang membantu pengembang aplikasi memahami
-            sentimen pengguna, mendeteksi spam, dan memperkirakan performa
-            aplikasi menggunakan teknologi AI canggih.
-          </p>
+            sentimen dan emosi pengguna, mendeteksi spam, hingga mengestimasikan
+            rating aplikasi menggunakan teknologi AI canggih.
+          </motion.p>
 
-          <SignedOut>
-            <SignUpButton
-              mode="modal"
-              forceRedirectUrl="/dashboard"
-              fallbackRedirectUrl="/dashboard"
-            >
+          <motion.div variants={itemVariants}>
+            <SignedOut>
+              <SignUpButton
+                mode="modal"
+                forceRedirectUrl="/dashboard"
+                fallbackRedirectUrl="/dashboard"
+              >
+                <Button
+                  size="lg"
+                  className="bg-quicktify-primary hover:bg-quicktify-secondary text-lg py-6 px-8"
+                >
+                  Coba Quicktify Sekarang, Gratis!
+                </Button>
+              </SignUpButton>
+            </SignedOut>
+
+            <SignedIn>
               <Button
+                asChild
                 size="lg"
                 className="bg-quicktify-primary hover:bg-quicktify-secondary text-lg py-6 px-8"
               >
-                Coba Quicktify Sekarang, Gratis!
+                <Link to="/dashboard" className="flex items-center gap-2">
+                  Quicktify Dashboard
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="transition-transform group-hover:translate-x-1"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </Link>
               </Button>
-            </SignUpButton>
-          </SignedOut>
+            </SignedIn>
+          </motion.div>
 
-          <SignedIn>
-            <Button
-              asChild
-              size="lg"
-              className="bg-quicktify-primary hover:bg-quicktify-secondary text-lg py-6 px-8"
-            >
-              <Link to="/dashboard" className="flex items-center gap-2">
-                Quicktify Dashboard
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="transition-transform group-hover:translate-x-1"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </Link>
-            </Button>
-          </SignedIn>
-
-          <div className="mt-16 relative w-full max-w-5xl">
+          <motion.div
+            className="mt-16 relative w-full max-w-5xl"
+            variants={scaleVariants}
+          >
             <div className="w-full aspect-[16/9] rounded-lg overflow-hidden bg-gradient-to-tr from-quicktify-primary/20 via-quicktify-accent/10 to-quicktify-primary/5 shadow-lg border border-quicktify-primary/20">
               <div className="w-full h-full flex flex-col gap-4 items-center justify-center p-8">
                 <div className="w-full flex justify-between items-center p-4 bg-quicktify-primary/10 rounded-lg border border-quicktify-primary/20">
@@ -208,8 +231,8 @@ export function HeroSection() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
