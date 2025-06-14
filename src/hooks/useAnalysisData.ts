@@ -297,8 +297,8 @@ export function useAnalysisData() {
       activeSection === 'app'
         ? `Mengumpulkan data ulasan dari aplikasi ${appId}`
         : csvFile
-          ? `Mengumpulkan data ulasan dari file ${csvFile.name}`
-          : 'Mengumpulkan data ulasan...'
+        ? `Mengumpulkan data ulasan dari file ${csvFile.name}`
+        : 'Mengumpulkan data ulasan...'
     );
     setAnalysisResult(null);
 
